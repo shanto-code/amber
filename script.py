@@ -2,26 +2,30 @@ import os
 import random
 
 def get_assets():
-    # বর্তমান ফাইলের লোকেশন অনুযায়ী পাথ সেট করা
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    music_dir = os.path.join(base_dir, "music")
-    image_dir = os.path.join(base_dir, "images")
+    # আপনার গিটহাবের ফোল্ডার নাম অনুযায়ী (বড় হাতের অক্ষর খেয়াল করুন)
+    music_dir = "Lo-Fi"
+    image_dir = "Images"
 
-    # ফাইল লিস্ট চেক করা
+    # ফোল্ডারগুলো আছে কি না নিশ্চিত করা
+    if not os.path.exists(music_dir) or not os.path.exists(image_dir):
+        # যদি উপরের নামে না থাকে তবে ছোট হাতের নামে চেক করবে
+        music_dir, image_dir = "music", "images"
+
     try:
-        music_files = [f for f in os.listdir(music_dir) if f.endswith('.mp3')]
-        image_files = [f for f in os.listdir(image_dir) if f.endswith(('.jpg', '.jpeg', '.png'))]
-    except FileNotFoundError:
-        return "Error: music or images folder not found!"
+        # শুধু mp3 এবং ছবিগুলো লিস্ট করা
+        music_files = [f for f in os.listdir(music_dir) if f.lower().endswith('.mp3')]
+        image_files = [f for f in os.listdir(image_dir) if f.lower().endswith(('.jpg', '.jpeg', '.png'))]
+    except Exception:
+        return "Error|Error|Error|Error|Error|Error|Error"
 
     if not music_files or not image_files:
-        return "Error: Folders are empty!"
+        return "Empty|Empty|Error|Error|Error|Error|Error"
 
-    # লটারি করে ফাইল বাছাই
+    # র‍্যান্ডম ফাইল সিলেক্ট করা
     selected_music = os.path.join(music_dir, random.choice(music_files))
     selected_image = os.path.join(image_dir, random.choice(image_files))
 
-    # আপনার চ্যানেলের জন্য স্পেশাল ডার্ক সাইকোলজি টেক্সট
+    # আপনার চ্যানেলের জন্য ৫টি টেক্সট
     facts = [
         "Silence is the best revenge.",
         "The eyes never lie, even when the lips do.",
@@ -32,7 +36,7 @@ def get_assets():
     
     selected_facts = random.sample(facts, 5)
     
-    # সবগুলো তথ্যকে পাইপ (|) দিয়ে আলাদা করে পাঠানো
+    # সবগুলো ডাটা একসাথে পাঠানো
     return f"{selected_music}|{selected_image}|{'|'.join(selected_facts)}"
 
 if __name__ == "__main__":
