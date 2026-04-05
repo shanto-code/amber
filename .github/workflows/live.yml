@@ -23,7 +23,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # গিটহাবের নিজস্ব API ব্যবহার করে পুরনো রান ডিলিট করা (১০০% কাজ করবে)
+      # গিটহাবের নিজস্ব API ব্যবহার করে পুরনো রান ডিলিট করা (১০০% কাজ করবে),
       - name: Auto-Clean Old Workflow Runs
         run: |
           runs=$(gh api -X GET /repos/${{ github.repository }}/actions/runs --jq '.workflow_runs[] | select(.status == "completed") | .id')
