@@ -16,6 +16,9 @@ on:
 jobs:
   stream:
     runs-on: ubuntu-latest
+    concurrency: 
+      group: lo-fi-stream
+      cancel-in-progress: true  # এটি আগের চলমান রানকে ক্যান্সেল করে নতুনটি শুরু করবে
     permissions:
       actions: write  # পুরনো রান ডিলিট করার জন্য এটি আবশ্যক
       contents: read
@@ -23,7 +26,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # গিটহাবের নিজস্ব API ব্যবহার করে পুরনো রান ডিলিট করা (১০০% কাজ করবে),
+      # গিটহাবের নিজস্ব API ব্যবহার করে পুরনো রান ডিলিট করা (১০০% কাজ করবে)
       - name: Auto-Clean Old Workflow Runs
         run: |
           runs=$(gh api -X GET /repos/${{ github.repository }}/actions/runs --jq '.workflow_runs[] | select(.status == "completed") | .id')
